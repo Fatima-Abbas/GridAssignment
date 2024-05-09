@@ -29,8 +29,8 @@ public class Tile : MonoBehaviour
 
     private void OnEnable()
     {
-        // Ensure tileIdentifier is within bounds
-        int tileIndex = (int)tileIdentifier; // Cast TileType to int
+      
+        int tileIndex = (int)tileIdentifier; 
         if (tileIndex >= 0 && tileIndex < tileSprites.Length)
         {
             GetComponent<SpriteRenderer>().sprite = tileSprites[tileIndex];
@@ -40,7 +40,7 @@ public class Tile : MonoBehaviour
             Debug.LogError("Tile identifier out of bounds for tileSprites array.");
         }
      //   FindAdjacent();
-        // Assuming FindNeighbours method initializes the neighboring tiles
+       
        Invoke(nameof(FindAdjacent), 0.3f);
     }
 
@@ -53,8 +53,7 @@ public class Tile : MonoBehaviour
         {
             if (tileIdentifier == TileType.Wood)
             {
-                //spwan table
-                //check availbility
+                
                 if (rightAdjacent != null && !rightAdjacent.isFilled && rightAdjacent.tileIdentifier == TileType.Wood)
                 {
                     isFilled = true;
@@ -91,12 +90,6 @@ public class Tile : MonoBehaviour
 
 
 
-
-
-
-
-
-
     private void OnMouseDown()
     {
         
@@ -110,38 +103,32 @@ public class Tile : MonoBehaviour
     {
         int gridRows = GenerateTiles_Sprite.instance.rows;
         int gridCloums = GenerateTiles_Sprite.instance.columns;
-        int gridSize = gridRows * gridCloums; // Calculate total number of tiles
+        int gridSize = gridRows * gridCloums; 
 
 
-        //find right neighbour
-        if (tileIndex % 16 != 0) {
+       
+        if (tileIndex % gridRows != 0) {
             rightAdjacent = transform.parent.GetChild(tileIndex).GetComponent<Tile>();
         }
-        //find left neighbour
-        if (tileIndex % 16 != 1)
+       
+        if (tileIndex % gridRows != 1)
         {
             leftAdjacent = transform.parent.GetChild(tileIndex - 2).GetComponent<Tile>();
         }
 
-        //find bottom neighbour
-        //if (tileIndex <= 240)
-        //{
-        //    bottomAdjacent = transform.parent.GetChild(tileIndex + 15).GetComponent<Tile>();
-        //}
-       
-        
 
 
         if (tileIndex < gridSize - gridCloums)
         {
-            bottomAdjacent = transform.parent.GetChild(tileIndex + gridCloums).GetComponent<Tile>();
+            bottomAdjacent = transform.parent.GetChild(tileIndex + (gridCloums-1)).GetComponent<Tile>();
         }
-        //find top neighbour
-        if (tileIndex > 16)
-        {
-            topAdjacent = transform.parent.GetChild(tileIndex - 17).GetComponent<Tile>();
-        }
+       
+       
 
+        if (tileIndex > gridRows)
+        {
+            topAdjacent = transform.parent.GetChild(tileIndex - (gridCloums -1)).GetComponent<Tile>();
+        }
 
     }
 
