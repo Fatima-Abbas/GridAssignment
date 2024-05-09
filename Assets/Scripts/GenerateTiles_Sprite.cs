@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GenerateTiles_Sprite : MonoBehaviour
 {
+    [Header("BUTTON")]
+    public UnityEngine.UI.Button resetButton;
+
     [Header("INTEGERS")]
     public int columns;
     public int rows;
 
     [Header("GAMEOBJECT")]
-    public GameObject tilePrefab; 
-    
- 
+    public GameObject tilePrefab;
+
+   
     public static GenerateTiles_Sprite instance;
 
     private void OnEnable()
@@ -19,7 +23,12 @@ public class GenerateTiles_Sprite : MonoBehaviour
         instance = this;
     }
 
-
+    public void Start()
+    {
+        resetButton.onClick.AddListener(() => {
+            ResetGrid();
+        });
+    }
     public void Generate(JsonData data)
     {
         Vector2 startPosition = new Vector2(0, 0);
@@ -48,4 +57,10 @@ public class GenerateTiles_Sprite : MonoBehaviour
             }
         }
     }
+
+    public void ResetGrid()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
 }

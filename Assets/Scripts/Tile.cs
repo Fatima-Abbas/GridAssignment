@@ -145,8 +145,12 @@ public class Tile : MonoBehaviour
 
     }
 
+    public void ResetTile()
+    {
+        isFilled = false;
+      
+    }
 
-   
 
 
 
